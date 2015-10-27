@@ -117,7 +117,7 @@ public class MainActivity extends Activity {
 		searchname = (EditText)findViewById(R.id.editText1);
 		// TODO: Run the search thread
 		SearchThread newsearch = new SearchThread(searchname.getText().toString());
-		newsearch.run();
+		newsearch.start();
 	}
 	
 	/**
