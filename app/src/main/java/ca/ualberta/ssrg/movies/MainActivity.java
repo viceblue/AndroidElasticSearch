@@ -9,7 +9,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.ssrg.androidelasticsearch.R;
 
@@ -20,7 +23,8 @@ public class MainActivity extends Activity {
 	private ArrayAdapter<Movie> moviesViewAdapter;
 	private ESMovieManager movieManager;
 	private MoviesController moviesController;
-
+	private EditText searchname;
+	private Button searchbutton;
 	private Context mContext = this;
 
 	@Override
@@ -34,7 +38,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-
+		searchbutton = (Button)findViewById(R.id.button1);
 		movies = new Movies();
 		moviesViewAdapter = new ArrayAdapter<Movie>(this, R.layout.list_item,movies);
 		movieList.setAdapter(moviesViewAdapter);
@@ -65,6 +69,16 @@ public class MainActivity extends Activity {
 				return true;
 			}
 		});
+
+		searchbutton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				search(view);
+			}
+		});
+
+
+
 	}
 
 	@Override
@@ -99,11 +113,11 @@ public class MainActivity extends Activity {
 	 */
 	public void search(View view) {
 		movies.clear();
-
 		// TODO: Extract search query from text view
-		
+		searchname = (EditText)findViewById(R.id.editText1);
 		// TODO: Run the search thread
-		
+		SearchThread newsearch = new SearchThread(searchname.getText().toString());
+		newsearch.run();
 	}
 	
 	/**
